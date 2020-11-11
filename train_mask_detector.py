@@ -1,7 +1,7 @@
-# USAGE
+# CÁCH DÙNG LỆNH
 # python train_mask_detector.py --dataset dataset
 
-# import the necessary packages
+# import các thư viện cần thiết
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.layers import AveragePooling2D
@@ -24,7 +24,7 @@ import numpy as np
 import argparse
 import os
 
-# construct the argument parser and parse the arguments
+# Các tham số đầu vào
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True,
 	help="path to input dataset")
@@ -35,48 +35,46 @@ ap.add_argument("-m", "--model", type=str,
 	help="path to output face mask detector model")
 args = vars(ap.parse_args())
 
-# initialize the initial learning rate, number of epochs to train for,
-# and batch size
+# Đặt init learning rate, số epochs, batch_size
 INIT_LR = 1e-4
 EPOCHS = 20
 BS = 32
 
-# grab the list of images in our dataset directory, then initialize
-# the list of data (i.e., images) and class images
+# lấy list images từ thư mục dataset, sau đó khởi tạo
+# list data(images,...) và class images
 print("[INFO] loading images...")
 imagePaths = list(paths.list_images(args["dataset"]))
 data = []
 labels = []
 
-# loop over the image paths
+# lặp qua các đường dẫn
 for imagePath in imagePaths:
-	# extract the class label from the filename
+	# lấy ra class label từ filename
 	label = imagePath.split(os.path.sep)[-2]
 
-	# load the input image (224x224) and preprocess it
+	# load ảnh đầu vào(224x224) và xử lí
 	image = load_img(imagePath, target_size=(224, 224))
 	image = img_to_array(image)
-	image = preprocess_input(image)
+	image = preprocess_input(image) #scale về [-1,1]
 
-	# update the data and labels lists, respectively
+	# thêm vào data và labels list tương ứng
 	data.append(image)
 	labels.append(label)
 
-# convert the data and labels to NumPy arrays
+# chuyển data và labels list sang Numpy arrays
 data = np.array(data, dtype="float32")
 labels = np.array(labels)
 
-# perform one-hot encoding on the labels
+# chuyển label sang dạng one-hot encoding
 lb = LabelBinarizer()
 labels = lb.fit_transform(labels)
 labels = to_categorical(labels)
 
-# partition the data into training and testing splits using 75% of
-# the data for training and the remaining 25% for testing
+# chia tập data thành 80% tập train và 20% tập test
 (trainX, testX, trainY, testY) = train_test_split(data, labels,
 	test_size=0.20, stratify=labels, random_state=42)
 
-# construct the training image generator for data augmentation
+# sinh thêm dữ liệu bằng data augmentation
 aug = ImageDataGenerator(
 	rotation_range=20,
 	zoom_range=0.15,
@@ -86,13 +84,11 @@ aug = ImageDataGenerator(
 	horizontal_flip=True,
 	fill_mode="nearest")
 
-# load the MobileNetV2 network, ensuring the head FC layer sets are
-# left off
+# load MobileNetV2 network cho fine-tuning (bỏ đi head FC layer)
 baseModel = MobileNetV2(weights="imagenet", include_top=False,
 	input_tensor=Input(shape=(224, 224, 3)))
 
-# construct the head of the model that will be placed on top of the
-# the base model
+# xây phần head của model (fine-tuning)
 headModel = baseModel.output
 headModel = AveragePooling2D(pool_size=(7, 7))(headModel)
 headModel = Flatten(name="flatten")(headModel)
@@ -100,22 +96,20 @@ headModel = Dense(128, activation="relu")(headModel)
 headModel = Dropout(0.5)(headModel)
 headModel = Dense(2, activation="softmax")(headModel)
 
-# place the head FC model on top of the base model (this will become
-# the actual model we will train)
+# đặt phần head vừa xây vào đầu của model load
 model = Model(inputs=baseModel.input, outputs=headModel)
 
-# loop over all layers in the base model and freeze them so they will
-# *not* be updated during the first training process
+# lặp qua các layer cơ sở của model MobileNetV2 và đóng băng để ko cập nhật hệ số những layer này
 for layer in baseModel.layers:
 	layer.trainable = False
 
-# compile our model
+# compile model
 print("[INFO] compiling model...")
 opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 model.compile(loss="binary_crossentropy", optimizer=opt,
 	metrics=["accuracy"])
 
-# train the head of the network
+# train
 print("[INFO] training head...")
 H = model.fit(
 	aug.flow(trainX, trainY, batch_size=BS),
@@ -124,23 +118,22 @@ H = model.fit(
 	validation_steps=len(testX) // BS,
 	epochs=EPOCHS)
 
-# make predictions on the testing set
+# thử predict trên tập test
 print("[INFO] evaluating network...")
 predIdxs = model.predict(testX, batch_size=BS)
 
-# for each image in the testing set we need to find the index of the
-# label with corresponding largest predicted probability
+# với mỗi ảnh predict đưa ra label có xác suất lớn nhất được dự đoán tương ứng
 predIdxs = np.argmax(predIdxs, axis=1)
 
-# show a nicely formatted classification report
+# show classification report
 print(classification_report(testY.argmax(axis=1), predIdxs,
 	target_names=lb.classes_))
 
-# serialize the model to disk
+# save model lại
 print("[INFO] saving mask detector model...")
 model.save(args["model"], save_format="h5")
 
-# plot the training loss and accuracy
+# plot trainning loss và accuracy, lưu lại plot này
 N = EPOCHS
 plt.style.use("ggplot")
 plt.figure()

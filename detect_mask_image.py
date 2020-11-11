@@ -1,7 +1,7 @@
-# USAGE
+# CÁCH DÙNG
 # python detect_mask_image.py --image images/pic1.jpeg
 
-# import the necessary packages
+# import các thư viện cần thiết
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
@@ -11,7 +11,7 @@ import cv2
 import os
 
 def mask_image():
-	# construct the argument parser and parse the arguments
+	# các tham số đầu vào
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-i", "--image", required=True,
 		help="path to input image")
