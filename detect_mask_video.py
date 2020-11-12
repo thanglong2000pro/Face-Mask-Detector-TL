@@ -121,7 +121,7 @@ while True:
         cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
     # show output frame
-    cv2.imshow("Frame", frame)
+    cv2.imshow("FACE_MASK_DETECTOR_TL", frame)
     key = cv2.waitKey(1) & 0xFF
 
     # nhấn q để thoát
