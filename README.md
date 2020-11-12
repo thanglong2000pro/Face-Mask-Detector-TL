@@ -40,8 +40,9 @@
 ## NEED IMPROVEMENT ##
 Our current method of detecting whether a person is wearing a mask or not is a two-step process:
 
-Step 1: Perform face detection
-Step 2: Apply our face mask detector to each face
+- Step 1: Perform face detection
+- Step 2: Apply our face mask detector to each face
+
 If enough of the face is obscured, the face cannot be detected, and therefore, the face mask detector will not be applied.
 
 ## REFERENCE ##
