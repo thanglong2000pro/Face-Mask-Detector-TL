@@ -35,7 +35,6 @@
 ## RESULT ##
 <img src="Readme_images/Evaluating Network.png">
 
-**Plot**
 <img src="Readme_images/plot.png">
 
 ## NEED IMPROVEMENT ##
