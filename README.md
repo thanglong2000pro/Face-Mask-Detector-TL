@@ -3,13 +3,13 @@
 ## INTRODUCTION ##
 **COVID-19 face mask detector using OpenCV, Keras/TensorFlow, and Deep Learning**
 - This is my project in DL Class, which is organized by AI4E. The COVID-19 mask detector I'm building here today could potentially be used to help ensure your safety and the safety of others. COVID-19 face mask detector used to:
- - Detect COVID-19 face masks in images
- - Detect face masks in video
- - Detect face masks in real-time video streams
+  - Detect COVID-19 face masks in images
+  - Detect face masks in video
+  - Detect face masks in real-time video streams
 - Solution:
- - Detecting faces in images/video
- - Extracting each individual face
- - Applying our face mask classifier
+  - Detecting faces in images/video
+  - Extracting each individual face
+  - Applying our face mask classifier
 
 ## PROJECT DEMO ##
 - **Detect in images**
