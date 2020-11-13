@@ -1,5 +1,5 @@
 # CÁCH DÙNG
-# python detect_mask_video.py
+# python detect_mask_video.py --video examples/video.mkv
 
 # import các thư viện cần thiết
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
@@ -67,6 +67,8 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 
 # các tham số đầu vào
 ap = argparse.ArgumentParser()
+ap.add_argument("-v", "--video", required=True,
+		help="path to input video")
 ap.add_argument("-f", "--face", type=str,
                 default="face_detector",
                 help="path to face detector model directory")
@@ -88,16 +90,16 @@ faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 print("[INFO] loading face mask detector model...")
 maskNet = load_model(args["model"])
 
-# khởi tạo video stream và cho phép bật webcam
-print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
+# load input video và process
+print("[INFO] starting video ...")
+vs = VideoStream(src=args["video"]).start()
 time.sleep(2.0)
 
 # lặp qua các frames từ video stream
 while True:
     # cắt frame từ video và resize về tối đa width 400 pixel
     frame = vs.read()
-    frame = imutils.resize(frame, width=400)
+    frame = imutils.resize(frame, width=800)
 
     # detect faces in the frame và xác định là mask or no mask
     (locs, preds) = detect_and_predict_mask(frame, faceNet, maskNet)

@@ -16,6 +16,9 @@
 <img src="Readme_images/demo_image.png">
 <img src="Readme_images/demo_image2.png">
 
+- **Detect in video**
+<img src="Readme_images/demo_video.gif">
+
 - **Detect in real-time video streams**
 <img src="Readme_images/demo_webcam.gif">
 
