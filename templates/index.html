@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Face Mask Detection</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class = "container">
+    <div class = "starter-template">
+        <h1>Face Mask Detection</h1>
+        <p class = "lead"> Use webcam, upload an image or video to detect</p>
+        <p> Face Mask Detector using OpenCV, Keras/TensorFlow, and Deep Learning  </p>
+        <p> By Lại Ngọc Thăng Long - November, 2020 </p>
+    </div>
+</div>
+
+<header class="navbar">
+    <form action="/upload" method="post" enctype="multipart/form-data" >
+        <div align="center">
+          <label class="btn btn-default btn-file">
+                <a href="webcam">Webcam</a>
+            </label>
+            <label class="btn btn-default btn-file">
+                Upload Image <input type="file" name="image" style="display: none;">
+            </label>
+            <input type="submit" value="Detect Image" class="btn btn-primary">
+        </div>
+    </form>
+</header>
+
+<div class="text-center">
+    {% if init %}
+            {% if image_to_show %}
+                <div>
+                    <img src="{{ image_to_show }}" style="width:600px;">
+                </div>
+            {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>
