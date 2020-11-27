@@ -1,7 +1,7 @@
 # Face Mask Detector-TL
 
 ## INTRODUCTION ##
-**COVID-19 face mask detector using OpenCV, Keras/TensorFlow, and Deep Learning**
+**COVID-19 face mask detector using OpenCV, Keras/TensorFlow, Flask and Deep Learning**
 - This is my project in DL Class, which is organized by AI4E. The COVID-19 mask detector I'm building here today could potentially be used to help ensure your safety and the safety of others. COVID-19 face mask detector used to:
   - Detect face masks in images
   - Detect face masks in video
@@ -12,6 +12,9 @@
   - Applying our face mask classifier
 
 ## PROJECT DEMO ##
+- **Demo web by Flask**
+<img src="Readme_images/demo_web.png">
+
 - **Detect in images**
 <img src="Readme_images/demo_image.png">
 <img src="Readme_images/demo_image2.png">
@@ -28,6 +31,7 @@
 - Keras
 - Caffe-based face detector
 - MobileNetV2
+- Flask
 
 ## INSTALLATION AND RUNNING ##
 1. Clone the repo
