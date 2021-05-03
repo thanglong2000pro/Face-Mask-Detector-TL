@@ -29,8 +29,6 @@
 - OpenCV
 - Tensorflow
 - Keras
-- Caffe-based face detector
-- MobileNetV2
 - Flask
 
 ## INSTALLATION AND RUNNING ##
@@ -56,6 +54,8 @@ If enough of the face is obscured, the face cannot be detected, and therefore, t
 
 ## REFERENCE ##
 - [Pyimagesearch](https://www.pyimagesearch.com/2020/05/04/covid-19-face-mask-detector-with-opencv-keras-tensorflow-and-deep-learning/)
+- [Mobilenet model](https://phamdinhkhanh.github.io/2020/09/19/MobileNet.html#6-t%C3%A0i-li%E1%BB%87u)
+- [MobileNetV2: Inverted Residuals and Linear Bottlenecks - Mark Sandler, Andrew Howard](https://arxiv.org/abs/1801.04381)
 - [Towardsdatascience](https://towardsdatascience.com/covid-19-face-mask-detection-using-tensorflow-and-opencv-702dd833515b)
 - [data-flair blog](https://data-flair.training/blogs/face-mask-detection-with-python/)
 - [Github](https://github.com/chandrikadeb7/Face-Mask-Detection)
