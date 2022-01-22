@@ -1,31 +1,31 @@
 import os
-import cv2  # OpenCV for image editing, computer vision and deep learning
-import base64  # Used for encoding image content string
-import imutils  # For easier image path processing
-import numpy as np  # Numpy for math/array operations
-from matplotlib import pyplot as plt  # Matplotlib for visualization
+import cv2  #
+import base64  # sử dụng để mã hóa ảnh dưới dạng string
+import imutils  # thư viện xử lí ảnh dễ hơn
+import numpy as np  #
+from matplotlib import pyplot as plt  #
 
 
 def draw_rectangle(image, face):
     (start_x, start_y, end_x, end_y) = face["rect"]
-    # Arrange color of the detection rectangle to be drawn over image
+    # xác định màu sẽ được vẽ
     detection_rect_color_rgb = (0, 255, 255)
-    # Draw the detection rectangle over image
+    # vẽ ô chữ nhật bao quanh
     cv2.rectangle(img=image,
                   pt1=(start_x, start_y),
                   pt2=(end_x, end_y),
                   color=detection_rect_color_rgb,
                   thickness=2)
 
-    # Draw detection probability, if it is present
+    # hiển thị xác suất nhận diện
     if (face["recognition_prob"] != []):
-        # Create probability text to be drawn over image
+        #
         text = "{}: {:.2f}%".format(face["name"], face["recognition_prob"])
-        # Arrange location of the probability text to be drawn over image
+        # vị trí vẽ
         y = start_y - 10 if start_y - 10 > 10 else start_y + 10
-        # Arrange color of the probability text to be drawn over image
+        # màu vẽ
         probability_color_rgb = (0, 255, 255)
-        # Draw the probability text over image
+        # vẽ
         cv2.putText(img=image,
                     text=text,
                     org=(start_x, y),
@@ -36,12 +36,12 @@ def draw_rectangle(image, face):
 
 
 def draw_rectangles(image, faces):
-    # Draw rectangle over detections, if any face is detected
+    # vẽ ô chữ nhật trên mỗi face được detect
     if len(faces) == 0:
         num_faces = 0
     else:
         num_faces = len(faces)
-        # Draw a rectangle
+        # vẽ ô chữ nhật
         for face in faces:
             draw_rectangle(image, face)
     return num_faces, image
